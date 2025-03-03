@@ -1,0 +1,285 @@
+/*Creacion de fuentes*/
+@font-face {
+    font-family: 'titulo-west';
+    src: url(texto/Barbarosa.ttf);
+}
+
+@font-face {
+    font-family: 'texto';
+    src: url(texto/West-Hood-DEMO.ttf);
+}
+
+@font-face {
+    font-family: 'text-main';
+    src: url(texto/WesternSheriff-j9jqM.otf);
+}
+
+/*RESET*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+
+    background-image: url('imgs/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+}
+
+#contain {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+input,
+button {
+    background-color: #fcf6de;
+}
+
+
+
+
+/*HEADER*/
+.cont-header {
+    margin: 1rem auto;
+    border: 0.3rem solid;
+}
+
+
+
+.title {
+    font-size: 6rem;
+    text-shadow: 1px 1px 5px #0000009e;
+    color: #BD4139;
+    font-family: 'titulo-west';
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/*MAIN*/
+main {
+    font-family: 'text-main';
+}
+
+/*Jugador que escribe palabra*/
+.contain-user {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+    margin: 2rem auto;
+    width: 80%;
+    justify-content: center;
+}
+
+#answer_user {
+    font-size: 1.3rem;
+    padding: 0.3rem;
+    margin: 0 0.5rem;
+    text-transform: uppercase;
+
+
+}
+
+#btn_playgame,
+#btn_check_letter,
+#btn_reset,
+#btn_solve {
+    font-size: 1.5rem;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+}
+
+/*Clase para los mensajes en pantalla*/
+.alert {
+    font-size: 1.5rem;
+    border: 0.2rem solid;
+    color: red;
+    padding: 0.5rem;
+    font-weight: bold;
+    opacity: 1;
+    width: 60%;
+    text-align: center;
+    margin: 2rem auto;
+    background-color: #fcf6de;
+}
+
+.correct {
+    color: green;
+}
+
+.info {
+    color: orange;
+}
+
+/*Panel de juego*/
+#contain_game {
+    font-size: 1.5rem;
+    margin: 1rem auto;
+    opacity: 0;
+    gap: 1rem;
+}
+
+#clue {
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    margin: 2.5rem auto;
+
+}
+
+
+.panels {
+    text-align: center;
+    border: 0.2rem solid;
+    padding: 1rem;
+    align-content: center;
+    margin: 2rem auto;
+}
+
+
+/*Letras usadas y vidas*/
+.life-letters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.div-panels {
+    border: 0.2rem solid;
+    padding: 0.5rem;
+    text-align: initial;
+    margin: 0.2rem auto;
+    background-color: #fcf6de;
+    width: 49%;
+}
+
+.letters {
+    display: flex;
+    flex-wrap: wrap;
+    text-transform: capitalize;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.letter_used {
+    font-size: 3rem;
+    padding: 1rem;
+    background-color: black;
+    border: 0.1rem solid;
+    color: white;
+    margin: 1rem 0;
+    text-align: center;
+    width: 75px;
+    height: 75px;
+}
+
+/*Palabra a adivinar*/
+#contain_letters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+}
+
+.guess_letter {
+    padding: 0.5rem 1.5rem;
+    background-color: #fcf6de;
+    color: black;
+    font-size: 5rem;
+    font-weight: bold;
+    align-content: center;
+    font-family: 'titulo-west';
+}
+
+#answer_player {
+    text-align: center;
+    width: 50px;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    margin: 0 0.5rem;
+}
+
+
+
+
+
+@keyframes lost_star {
+    0% {
+        transform: rotate(0deg), scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(2);
+
+    }
+
+    100% {
+        transform: rotate(360deg) scale(0);
+
+    }
+
+}
+
+
+
+/*Resultado final*/
+#final_result, #player_solution {
+    display: none;
+    position: absolute;
+    width: 70%;
+    margin: 0 auto;
+    top: 25%;
+    left: 15%;
+    z-index: 9999;
+    border-radius: 0.5rem;
+    text-align: center;
+    padding: 6rem;
+    background-color: black;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+}
+
+.text_result {
+    margin: 3rem;
+    color: white;
+    font-size: 5rem;
+}
+
+.win {
+    background-image: url('imgs/fuegos_artificales.png');
+
+    text-shadow: 2px 2px 10px green;
+
+}
+
+.lost {
+    background-image: url('imgs/dead.png');
+    text-shadow: 2px 2px 10px red;
+}
+
+/*Volver a jugar*/
+#btn_reset {
+    display: block;
+    padding: 0.5rem;
+    width: 40%;
+    margin: 0 auto;
+    font-size: 1.5rem;
+}

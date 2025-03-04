@@ -23,46 +23,39 @@ const MSGFINAL = document.getElementById("final_result");
 document.getElementById("answer_user").focus();
 
 //----------------Funciones---------------------//
+
 // FUNCIÓN. Validar que el usuario introduzca una palabra.
 function validWord() {
   //Elemento donde se introduce la palabra
   word = document.getElementById("answer_user").value;
+  // LLamamos a la función de validación
+  checkValidation(word, document.getElementById("message_error"), answer_user);
+}
 
-  //Condicionales de validación
-
+//Condicionales de validación
+function checkValidation(word, nameClass, idReset) {
   // CASO1 - No se puede dejar vacío este input ni tampoco que contenga numeros
   if (!word || !isNaN(word)) {
     // usamos la funcion mensajeError para mostra el error por pantalla
-    msg(
-      document.getElementById("message_error"),
-      "Debe introducir una palabra",
-      "alert"
-    );
+    msg(nameClass, "Debe introducir una palabra", "alert");
     // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
-    reset("answer_user");
+    reset(idReset);
+    return true;
   } else {
     //CASO 2 - La palabra solo puede contener las letras permitidas.
     for (const l of word) {
       if (!ALLOWLETTERS.includes(l.toUpperCase())) {
         if (l == " ") {
           //Lanzamos mensaje de error en caso que el haya introducido dos o mas palabras
-          msg(
-            document.getElementById("message_error"),
-            "Solo se puede escribir una palabra",
-            "alert"
-          );
+          msg(nameClass, "Solo se puede escribir una palabra", "alert");
         } else {
           // Mensaje de error para todos los demás casos
-          msg(
-            document.getElementById("message_error"),
-            "La palabra solo puede contener caracteres",
-            "alert"
-          );
+          msg(nameClass, "La palabra solo puede contener caracteres", "alert");
         }
         // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
-        reset("answer_user");
+        reset(idReset);
         //para salir de la función
-        return;
+        return true;
       }
     }
     // LLamamos a la función wordCorrect porque se han introducido valores correctos
@@ -102,7 +95,7 @@ function toPlay() {
     if (letterInWord(player_letter)) {
       // Comprobar si el jugador a adivinado la palabra
       if (letras_acertadas == word.length) {
-        finalResult("¡Has adivinado la palabra!", "win");
+        finalResult("¡Enhorabuena, ha adivinado la palabra!", "win");
         // Limpiamos el input de la palabra que hay que adivinar
         document.getElementById("answer_user").value = "";
         return;
@@ -114,6 +107,7 @@ function toPlay() {
       //Quitamos una estrella de la pantalla
       document.getElementById(`part${vidas}`).style.animation =
         '"lost_star" 2s forwards';
+      document.getElementById(`part${vidas}`).style.opacity = 0;
       //Restamos vida
       vidas--;
       //Llamamos a la función que verifique que todavía quedan vidas
@@ -247,7 +241,7 @@ function nextGame() {
   //11.- Quitar el mensaje final
   MSGFINAL.style.display = "none";
   //12.- Quitamos el mensaje de error o acierto
-  MESSAGES.style.opacity = "0";
+  msg(MESSAGES, "", "");
   //13.- Quitamos el cuadro central del juego
   document.getElementById("contain_game").style.opacity = "0";
   //14.- Poner el foco en input inicial
@@ -286,11 +280,28 @@ function solveWordPanel() {
   document.getElementById("solution").style.display = "flex";
   // Ponemos el foco en el input
   document.getElementById("player_solution").focus();
-  // Almacenamos la palabra que ha escrito el usuario
+  // Dejamos de mostrar posibles mensajes de errores de juegos anteriores
+  document.getElementById("error_solution").style.display = "none";
 }
+
 // FUNCION. Comprobar si la palabra
 function solveWord() {
+  //Cambiamos el display del posible mensaje de error para que pueda aparecer.
+  document.getElementById("error_solution").style.display = "block";
+
+  // Almacenamos la palabra que ha escrito el usuario
   let user_solution_word = document.getElementById("player_solution").value;
+  //Comprobamos que se haya ecrito alguna palabra
+  if (
+    checkValidation(
+      user_solution_word,
+      document.getElementById("error_solution"),
+      "player_solution"
+    )
+  ) {
+    return;
+  }
+
   // Comprobamos que sea igual que la palabra
   if (word == user_solution_word) {
     //Si son iguales, llamamos a la función resultado final
@@ -309,6 +320,8 @@ function solveWord() {
     //Quitamos una estrella de la pantalla
     document.getElementById(`part${vidas}`).style.animation =
       '"lost_star" 2s forwards';
+    //Por si no funciona la animacion anterior en el navegador
+    document.getElementById(`part${vidas}`).style.opacity = 0;
     //Restamos vida
     vidas--;
     //Llamamos a la función que verifique que todavía quedan vidas

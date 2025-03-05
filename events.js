@@ -1,7 +1,11 @@
 //----------Variables globales----------//
-//Donde se almacena la palabra a adivinar durante toda la partida.
+//Donde se almacena la palabra Que introduce el usuario para adivinar.
 let word;
-////Donde se almacena la letra que el usuario introduce
+//Se almacena la palabra sin acentos.
+let word_clean = "";
+//Contabilizar espacios para saber el número exacto de letras a encontrar
+let spaces = 0;
+//Donde se almacena la letra que el usuario introduce
 let player_letter;
 //Contabilizar el número de vidas
 let vidas = 6;
@@ -10,7 +14,7 @@ let letras_acertadas = 0;
 // Array para guardar las letras que va introduciendo el usuario
 let listado_letras_usadas = [];
 // variables que contiene las letras que puede usar el usuario para introducir una palabra.
-const ALLOWLETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÚ";
+const ALLOWLETTERS = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZÁÉÍÓÚ ";
 
 //---------Elementos del DOM----------//
 //Elemento del DOM donde se muestra los mensajes de acierto o error cuando se introduce una letra
@@ -28,13 +32,21 @@ document.getElementById("answer_user").focus();
 function validWord() {
   //Elemento donde se introduce la palabra
   word = document.getElementById("answer_user").value;
+  //Pasamos a mayúscula la palabra
+  word = word.toUpperCase();
+  //Quitamos posibles espacios redundantes al principio y al final
+  word = word.trim();
+  //Remplazamos espacios dobles por sencillos, siempre y cuando los haya
+  while (word.indexOf("  ") != -1) {
+    word = word.replaceAll("  ", " ");
+  }
   // LLamamos a la función de validación
   checkValidation(word, document.getElementById("message_error"), answer_user);
 }
 
 //Condicionales de validación
 function checkValidation(word, nameClass, idReset) {
-  // CASO1 - No se puede dejar vacío este input ni tampoco que contenga numeros
+  // CASO1 - No se puede dejar vacío este input ni tampoco que contenga numeros ni espacios
   if (!word || !isNaN(word)) {
     // usamos la funcion mensajeError para mostra el error por pantalla
     msg(nameClass, "Debe introducir una palabra", "alert");
@@ -44,51 +56,109 @@ function checkValidation(word, nameClass, idReset) {
   } else {
     //CASO 2 - La palabra solo puede contener las letras permitidas.
     for (const l of word) {
-      if (!ALLOWLETTERS.includes(l.toUpperCase())) {
-        if (l == " ") {
-          //Lanzamos mensaje de error en caso que el haya introducido dos o mas palabras
-          msg(nameClass, "Solo se puede escribir una palabra", "alert");
-        } else {
-          // Mensaje de error para todos los demás casos
-          msg(nameClass, "La palabra solo puede contener caracteres", "alert");
-        }
+      if (!ALLOWLETTERS.includes(l)) {
+        // Mensaje de error
+        msg(nameClass, "La palabra solo puede contener caracteres", "alert");
         // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
         reset(idReset);
         //para salir de la función
         return true;
       }
     }
-    // LLamamos a la función wordCorrect porque se han introducido valores correctos
-    wordCorrect(word);
   }
+  // LLamamos a la función wordCorrect porque se han introducido valores correctos
+  wordCorrect(word);
 }
 
 //FUNCION. El usuario ha introducido una palabra correcta
 function wordCorrect(correct_word) {
-  console.log(correct_word);
+  //En caso de que hubiera espacios redundantes pero la palabra es correcta, solo se debe mostrar la palabra.
+  document.getElementById("answer_user").value = correct_word;
   // Hacemos visible el texto de cuantas letras tiene la palabra
   document.getElementById("clue").style.opacity = "1";
-  // Añadimos el total de letras que contiene la palabra escrita
-  document.getElementById("n-letter").textContent = correct_word.length;
   //Quitamos el mensaje de error en caso que haya salido
   document.getElementById("msg-error").style.display = "none";
   //Hacemos que no se pueda introducir ninguna palabra hasta que no se adivine la actual
-  correct_word.disabled = true;
+  document.getElementById("answer_user").disabled = true;
   //Creamos las letras
   for (let i = 0; i < correct_word.length; i++) {
-    //Elemento del DOM donde se va a mostrar las letras ocultas
-    document.getElementById("contain_letters").innerHTML +=
-      '<p class="guess_letter">_</p>';
+    //Para cada letra creamos elemento en el DOM donde se va a mostrar las letras ocultas y le agregamos clase
+    let hidden_letter = document.createElement("p");
+    hidden_letter.className = "guess_letter";
+    // Si la letra es un espacio, se muestra un punto y contabalizamos el espacio
+    if (correct_word[i] == " ") {
+      hidden_letter.textContent = ".";
+      document.getElementById("contain_letters").append(hidden_letter);
+      spaces++;
+      //Sino, se muestra un guion.
+    } else {
+      hidden_letter.textContent = "-";
+      document.getElementById("contain_letters").append(hidden_letter);
+    }
+    //Enviamos cada letra a la función cleanLetter para que quite acentos
+    word_clean += cleanLetter(correct_word[i]);
   }
+  // Añadimos el total de letras que contiene la palabra escrita
+  document.getElementById("n-letter").textContent =
+    correct_word.length - spaces;
+
   // Hacemos aparecer la opción de introducir letras al jugador
   document.getElementById("contain_game").style.opacity = "1";
   //Limpiamos el input para que no aparezca ninguna letra introducida anteriormente en otra partida.
   reset("answer_player");
 }
 
+//FUNCION. Devolver palabra sin letras con acentos
+function cleanLetter(letter_with_accent) {
+  // Variable donde almacenamos la letra sin acento
+  let letter_without_accent = "";
+  console.log(letter_with_accent);
+
+  switch (letter_with_accent) {
+    case "Á":
+    case "À":
+    case "Ä":
+    case "Â":
+      letter_without_accent = "A";
+      break;
+    case "È":
+    case "É":
+    case "Ë":
+    case "Ê":
+      letter_without_accent = "E";
+      break;
+    case "Ì":
+    case "Í":
+    case "Ï":
+    case "Î":
+      letter_without_accent = "I";
+      break;
+    case "Ó":
+    case "Ò":
+    case "Ö":
+    case "Ô":
+      letter_without_accent = "O";
+      break;
+    case "Ú":
+    case "Ù":
+    case "Ü":
+    case "Û":
+      letter_without_accent = "U";
+      break;
+    // Si no entra en ningun caso devuelve la misma letra
+    default:
+      letter_without_accent = letter_with_accent;
+      break;
+  }
+  return letter_without_accent;
+}
+
 //FUNCION. Empezar el juego
 function toPlay() {
+  //Almecenamos el valor de la letra introducida
   player_letter = document.getElementById("answer_player").value;
+  // La pasamos a mayúscula
+  player_letter = player_letter.toUpperCase();
   //Llamamos a las funciones validLetter (válida que la letra introducida sea correcta) y la función letterUsed (verifica que la letra introducida no se haya probado con anterioridad)
   if (validLetter(player_letter) && letterNoUsed(player_letter)) {
     //Llamamos a la función que compruebe si la letra esta en la palabra o no
@@ -188,10 +258,10 @@ function letterInWord(letter) {
     msg(MESSAGES, "¡Letra acertada!", "alert correct");
     // Recorremos la palabra a adivinar para saber en que posición o posiciones se encuentra la letra
     for (let i = 0; i < word.length; i++) {
-      if (letter == word[i]) {
+      if (letter == word_clean[i]) {
         // Cambiamos el textContent del elemento del DOM donde se muestra la letra acertada
         document.getElementsByClassName("guess_letter")[i].textContent =
-          word[i].toUpperCase();
+          word[i];
         //Sumamos el valor de letras acertadas
         letras_acertadas++;
       }
@@ -223,7 +293,7 @@ function nextGame() {
   //4.- Array letras intentadas
   listado_letras_usadas = [];
   //5.- Se pueda introducir nueva palabra
-  word.disabled = false;
+  document.getElementById("answer_user").disabled = false;
   //6.- Letras ocultas vacio
   document.getElementById("contain_letters").innerHTML = "";
   //7.- Letra introducidas por el usuario vacío.
@@ -250,11 +320,8 @@ function nextGame() {
 
 //FUNCION. Cuadro final
 function finalResult(msg, nameClass) {
-  console.log(msg + nameClass);
   // En caso que el usuario haya clicado en la opción '¿Quieres resolver?, quitamos la ventana emergente
   document.getElementById("solution").style.display = "none";
-  // Quitamos el cuadro central del juego para centrarnos en el cuadro final
-  document.getElementById("contain_game").style.opacity = "0";
   //Mostramos el cuadro emergente con el mensaje final
   MSGFINAL.style.display = "block";
   //Colocamos imagen de fondo

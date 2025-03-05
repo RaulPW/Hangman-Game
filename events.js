@@ -1,5 +1,5 @@
 //----------Variables globales----------//
-//Donde se almacena la palabra Que introduce el usuario para adivinar.
+//Donde se almacena la palabra que introduce el usuario para adivinar.
 let word;
 //Se almacena la palabra sin acentos.
 let word_clean = "";
@@ -32,6 +32,19 @@ document.getElementById("answer_user").focus();
 function validWord() {
   //Elemento donde se introduce la palabra
   word = document.getElementById("answer_user").value;
+  //Llamamos a la función cleanWord
+  word = cleanWord(word);
+  // LLamamos a la función de validación
+  if (
+    checkValidation(word, document.getElementById("message_error"), answer_user)
+  );
+  {
+    wordCorrect(word);
+  }
+}
+
+//Función limpiar palabra. Quitar espacios innecesarios y pasar a mayúsculas.
+function cleanWord(word) {
   //Pasamos a mayúscula la palabra
   word = word.toUpperCase();
   //Quitamos posibles espacios redundantes al principio y al final
@@ -40,8 +53,7 @@ function validWord() {
   while (word.indexOf("  ") != -1) {
     word = word.replaceAll("  ", " ");
   }
-  // LLamamos a la función de validación
-  checkValidation(word, document.getElementById("message_error"), answer_user);
+  return word;
 }
 
 //Condicionales de validación
@@ -52,7 +64,7 @@ function checkValidation(word, nameClass, idReset) {
     msg(nameClass, "Debe introducir una palabra", "alert");
     // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
     reset(idReset);
-    return true;
+    return false;
   } else {
     //CASO 2 - La palabra solo puede contener las letras permitidas.
     for (const l of word) {
@@ -62,12 +74,11 @@ function checkValidation(word, nameClass, idReset) {
         // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
         reset(idReset);
         //para salir de la función
-        return true;
+        return false;
       }
     }
+    return true;
   }
-  // LLamamos a la función wordCorrect porque se han introducido valores correctos
-  wordCorrect(word);
 }
 
 //FUNCION. El usuario ha introducido una palabra correcta
@@ -284,8 +295,8 @@ function reset(elemento) {
 
 //FUNCION. Reiniciar variables y contenido del DOM
 function nextGame() {
-  //1.- Palabra
-  word = "";
+  //1.- El valor de la palabra que introduce el usuario se limpia
+  document.getElementById("answer_user").value = "";
   //2.- Vidas
   vidas = 6;
   //3.- Letras acertadas
@@ -316,6 +327,8 @@ function nextGame() {
   document.getElementById("contain_game").style.opacity = "0";
   //14.- Poner el foco en input inicial
   document.getElementById("answer_user").focus();
+  //15.- Limpiamos el elemento del DOM que contiene la palabra que introduce el usuario cuando quiere resolver
+  document.getElementById("player_solution").value = "";
 }
 
 //FUNCION. Cuadro final
@@ -355,9 +368,15 @@ function solveWordPanel() {
 function solveWord() {
   //Cambiamos el display del posible mensaje de error para que pueda aparecer.
   document.getElementById("error_solution").style.display = "block";
-
-  // Almacenamos la palabra que ha escrito el usuario
+  //Almacenamos la palabra que ha escrito el usuario
   let user_solution_word = document.getElementById("player_solution").value;
+  //Pasamos a la función cleanWord (pase a mayúscula y quite espacios redundantes)
+  user_solution_word = cleanWord(user_solution_word);
+  //Quitamos los posibles acentos que pueda tener la solución ofrecida por el usuario
+  let user_solution_word_no_accent = "";
+  for (const letter of user_solution_word) {
+    user_solution_word_no_accent += cleanLetter(letter);
+  }
   //Comprobamos que se haya ecrito alguna palabra
   if (
     checkValidation(
@@ -366,33 +385,37 @@ function solveWord() {
       "player_solution"
     )
   ) {
-    return;
-  }
-
-  // Comprobamos que sea igual que la palabra
-  if (word == user_solution_word) {
-    //Si son iguales, llamamos a la función resultado final
-    finalResult("!Enhorabuena, ha adivinado la palabra!", "win");
-  } else {
-    // Limpiamos el input
-    document.getElementById("player_solution").value = "";
-    //Quitamos ventana emergente
-    document.getElementById("solution").style.display = "none";
-    // Lanzamos mensaje de error
-    msg(
-      MESSAGES,
-      "La palabra introducida no es la correcta. Pierde una vida",
-      "alert"
-    );
-    //Quitamos una estrella de la pantalla
-    document.getElementById(`part${vidas}`).style.animation =
-      '"lost_star" 2s forwards';
-    //Por si no funciona la animacion anterior en el navegador
-    document.getElementById(`part${vidas}`).style.opacity = 0;
-    //Restamos vida
-    vidas--;
-    //Llamamos a la función que verifique que todavía quedan vidas
-    check_lifes();
+    // Comprobamos que sea igual que la palabra
+    if (word_clean == user_solution_word_no_accent) {
+      // Mostramos todas las letras en los huecos
+      for (let i = 0; i < word.length; i++) {
+        // Cambiamos el textContent del elemento del DOM donde se muestra cada la letra
+        document.getElementsByClassName("guess_letter")[i].textContent =
+          word[i];
+      }
+      //Llamamos a la función resultado final
+      finalResult("!Enhorabuena, ha adivinado la palabra!", "win");
+    } else {
+      // Limpiamos el input
+      document.getElementById("player_solution").value = "";
+      //Quitamos ventana emergente
+      document.getElementById("solution").style.display = "none";
+      // Lanzamos mensaje de error
+      msg(
+        MESSAGES,
+        "La palabra introducida no es la correcta. Pierde una vida",
+        "alert"
+      );
+      //Quitamos una estrella de la pantalla
+      document.getElementById(`part${vidas}`).style.animation =
+        '"lost_star" 2s forwards';
+      //Por si no funciona la animacion anterior en el navegador
+      document.getElementById(`part${vidas}`).style.opacity = 0;
+      //Restamos vida
+      vidas--;
+      //Llamamos a la función que verifique que todavía quedan vidas
+      check_lifes();
+    }
   }
 }
 

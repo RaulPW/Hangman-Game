@@ -30,10 +30,6 @@
                 <input type="password" id="answer_user">
                 <button id="btn_playgame">A jugar!</button>
                 <button id="btn_initial">Volver a empezar</button>
-                <div id="msg-error">
-                    <p id="message_error"></p>
-                </div>
-
             </div>
 
 
@@ -65,17 +61,14 @@
                     <div id="contain_letters">
                     </div>
                     <div class="contain_player">
-                        <p id="msg_player"></p>
                         <label for="answer_player" class="in_letter">Introduzca una letra: </label>
                         <input type="text" id="answer_player" maxlength="1">
                         <button id="btn_check_letter">Comprobar</button>
                         <button id="btn_solve_panel">¿Quieres resolver?</button>
                         <div id="solution">
-                            <p id="error_solution"></p>
                             <label for="player_solution" class="question_word">¿Cual es la palabra?</label>
                             <input type="text" name="player_solution" id="player_solution"
                                 placeholder="¡Recuerda acentos!">
-
                             <button id="btn_solve">Comprobar</button>
                         </div>
                     </div>
@@ -89,9 +82,9 @@
             <div id="final_result">
                 <button id="btn_reset">Volver a jugar</button>
             </div>
-
-            <div id="msg-error">
-                <p id="message_error"></p>
+            <!--Cuadro emergente con los mensajes para el usuario-->
+            <div id="msg">
+                <p id="msg_text"></p>
                 <button id="btn_close_msg">Entendido</button>
             </div>
 

@@ -17,11 +17,11 @@ let listado_letras_usadas = [];
 const ALLOWLETTERS = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZÁÉÍÓÚ ";
 
 //---------Elementos del DOM----------//
-//Elemento del DOM donde se muestra los mensajes de acierto o error cuando se introduce una letra
-const MESSAGES = document.getElementById("msg_player");
+//Elemento contenedor del DOM donde se muestra los mensajes de acierto o error cuando se introduce una letra
+const MESSAGES = document.getElementById("msg");
 
-//Elemento del DOM donde se almacena el mensaje final
-const MSGFINAL = document.getElementById("final_result");
+//Elemento del DOM donde se almacena el mensaje
+const MSGTEXT = document.getElementById("msg_text");
 
 //Poner el foco en el input inicial nada mas entrar en la web
 document.getElementById("answer_user").focus();
@@ -35,10 +35,7 @@ function validWord() {
   //Llamamos a la función cleanWord
   word = cleanWord(word);
   // LLamamos a la función de validación
-  if (
-    checkValidation(word, document.getElementById("message_error"), answer_user)
-  );
-  {
+  if (checkValidation(word, answer_user)) {
     wordCorrect(word);
   }
 }
@@ -57,11 +54,11 @@ function cleanWord(word) {
 }
 
 //Condicionales de validación
-function checkValidation(word, nameClass, idReset) {
+function checkValidation(word, idReset) {
   // CASO1 - No se puede dejar vacío este input ni tampoco que contenga numeros ni espacios
   if (!word || !isNaN(word)) {
-    // usamos la funcion mensajeError para mostra el error por pantalla
-    msg(nameClass, "Debe introducir una palabra", "alert");
+    // usamos la funcion msg para mostra el error por pantalla
+    msg("Debe introducir una palabra", "alert");
     // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
     reset(idReset);
     return false;
@@ -70,7 +67,7 @@ function checkValidation(word, nameClass, idReset) {
     for (const l of word) {
       if (!ALLOWLETTERS.includes(l)) {
         // Mensaje de error
-        msg(nameClass, "La palabra solo puede contener caracteres", "alert");
+        msg("La palabra solo puede contener caracteres", "alert");
         // reseteamos para que en el input desaparezca el contenido y el foco se centre en él
         reset(idReset);
         //para salir de la función
@@ -88,7 +85,7 @@ function wordCorrect(correct_word) {
   // Hacemos visible el texto de cuantas letras tiene la palabra
   document.getElementById("clue").style.opacity = "1";
   //Quitamos el mensaje de error en caso que haya salido
-  document.getElementById("msg-error").style.display = "none";
+  MESSAGES.style.display = "none";
   //Hacemos que no se pueda introducir ninguna palabra hasta que no se adivine la actual
   document.getElementById("answer_user").disabled = true;
   //Creamos las letras
@@ -176,7 +173,7 @@ function toPlay() {
     if (letterInWord(player_letter)) {
       // Comprobar si el jugador a adivinado la palabra
       if (letras_acertadas == word.length) {
-        finalResult("¡Enhorabuena, ha adivinado la palabra!", "win");
+        msg("¡Enhorabuena, ha adivinado la palabra!", "win alert");
         // Limpiamos el input de la palabra que hay que adivinar
         document.getElementById("answer_user").value = "";
         return;
@@ -201,7 +198,7 @@ function toPlay() {
 function check_lifes() {
   //Mensaje para cuando quede una vida
   if (vidas == 1) {
-    msg(MESSAGES, "¡LE QUEDA UN INTENTO!", "alert info");
+    msg("¡LE QUEDA UN INTENTO!", "alert info");
   }
   // Jugador ha perdido
   else if (vidas == 0) {
@@ -218,12 +215,12 @@ function check_lifes() {
 function validLetter(letter) {
   // CASO 1. El jugador no ha escrito nada
   if (!letter) {
-    msg(MESSAGES, "Debe introducir un carácter", "alert");
+    msg("Debe introducir un carácter", "alert");
     reset("answer_player");
     return false;
     // CASO2. El jugador ha escrito un número
   } else if (!isNaN(letter)) {
-    msg(MESSAGES, "El carácter NO debe ser de tipo numérico", "alert");
+    msg("El carácter NO debe ser de tipo numérico", "alert");
     reset("answer_player");
     return false;
   } else {
@@ -246,7 +243,7 @@ function letterNoUsed(letter) {
     return true;
   } else {
     //La letra introducida coincide con alguna letra dentro de las letras ya usadas, aparecerá un mensaje de error.
-    msg(MESSAGES, "Letra ya introducida", "alert");
+    msg("Letra ya introducida", "alert info");
     //Borrar la letra introducida y poner el foco en el input
     reset("answer_player");
     return false;
@@ -258,15 +255,11 @@ function letterInWord(letter) {
   // Si la letra no esta en la palabra, mensaje de error y quitamos vida.
   if (word.indexOf(letter) == -1) {
     //Mensaje de error
-    msg(
-      MESSAGES,
-      "La letra introducida no esta en la palabra. Pierde una vida",
-      "alert"
-    );
+    msg("La letra introducida no esta en la palabra. Pierde una vida", "alert");
     return false;
   } else {
     // Mostramos por pantalla mensaje de acierto
-    msg(MESSAGES, "¡Letra acertada!", "alert correct");
+    msg("¡Letra acertada!", "alert correct");
     // Recorremos la palabra a adivinar para saber en que posición o posiciones se encuentra la letra
     for (let i = 0; i < word.length; i++) {
       if (letter == word_clean[i]) {
@@ -282,9 +275,18 @@ function letterInWord(letter) {
 }
 
 //FUNCION. Mostrar mensajes de error
-function msg(elemento, mensaje, clase) {
-  elemento.textContent = mensaje;
-  elemento.className = clase;
+function msg(mensaje, clase) {
+  //Mostramos por pantalla el cuadro donde aparecerá el mensaje
+  MESSAGES.style.display = "block";
+  //Añadimos clase
+  MESSAGES.className = clase;
+  // Agregamos texto al contenido del cuadro
+  MSGTEXT.textContent = mensaje;
+}
+
+//funcion para cerrar los cuadros con mensaje
+function msgClose() {
+  MESSAGES.style.display = "none";
 }
 
 //FUNCION. Reset para poner el cursor y el foco de nuevo en los input para seguir jugando
@@ -321,18 +323,16 @@ function nextGame() {
   }
   //11.- Quitar el mensaje final
   MSGFINAL.style.display = "none";
-  //12.- Quitamos el mensaje de error o acierto
-  msg(MESSAGES, "", "");
-  //13.- Quitamos el cuadro central del juego
+  //12.- Quitamos el cuadro central del juego
   document.getElementById("contain_game").style.opacity = "0";
-  //14.- Poner el foco en input inicial
+  //13.- Poner el foco en input inicial
   document.getElementById("answer_user").focus();
-  //15.- Limpiamos el elemento del DOM que contiene la palabra que introduce el usuario cuando quiere resolver
+  //14.- Limpiamos el elemento del DOM que contiene la palabra que introduce el usuario cuando quiere resolver
   document.getElementById("player_solution").value = "";
 }
 
 //FUNCION. Cuadro final
-function finalResult(msg, nameClass) {
+function finalResult(final_message, nameClass) {
   // En caso que el usuario haya clicado en la opción '¿Quieres resolver?, quitamos la ventana emergente
   document.getElementById("solution").style.display = "none";
   //Mostramos el cuadro emergente con el mensaje final
@@ -348,7 +348,7 @@ function finalResult(msg, nameClass) {
   }
   //Creamos un elemento p donde mostraremos la frase y le daremos estilo
   let final = document.createElement("p");
-  final.textContent = msg;
+  final.textContent = final_message;
   final.classList.add("text_result");
   // Añadimos al DOM
   MSGFINAL.prepend(final);
@@ -426,3 +426,4 @@ document.getElementById("btn_reset").onclick = nextGame;
 document.getElementById("btn_solve_panel").onclick = solveWordPanel;
 document.getElementById("btn_solve").onclick = solveWord;
 document.getElementById("btn_initial").onclick = nextGame;
+document.getElementById("btn_close_msg").onclick = msgClose;

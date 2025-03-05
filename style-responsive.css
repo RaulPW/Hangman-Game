@@ -305,11 +305,13 @@ main {
 
 .win {
     background-image: url('imgs/fuegos_artificales.png');
+    color: white;
 
 }
 
 .lost {
     background-image: url('imgs/dead.png');
+    color: white;
 
 }
 
@@ -332,16 +334,32 @@ main {
 }
 
 /*Clase para los mensajes en pantalla*/
+#msg {
+    display: none;
+}
+
+#msg_text {
+    font-size: 1.1rem;
+}
+
 .alert {
-    font-size: 1rem;
-    border: 0.2rem solid;
-    color: red;
-    padding: 0.5rem;
-    font-weight: bold;
-    width: 100%;
     text-align: center;
-    margin: 2rem auto;
-    background-color: #fcf6de;
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    top: 35%;
+    left: 15%;
+    z-index: 9998;
+    background-color: black;
+    color: white;
+    padding: 1rem;
+    width: 70%;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    color: red;
+    border: 0.2rem solid;
+    font-size: 1rem;
 }
 
 .correct {
@@ -351,6 +369,14 @@ main {
 .info {
     color: orange;
 }
+
+#btn_close_msg {
+    margin: 1rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+
 
 @media all and (min-width:600px) {
     .title {

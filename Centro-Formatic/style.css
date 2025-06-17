@@ -8,7 +8,8 @@
 
 /*PROPIEDADES GENERALES*/
 .contain {
-    width: 1400px;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     font-family: "Oswald", serif;
     color: #072E45;
@@ -16,7 +17,7 @@
 }
 
 img {
-    max-width: 100%;
+    width: 100%;
 }
 
 a:link,
@@ -39,18 +40,12 @@ section {
 
 /*Botón para subir a la parte superior de la página desde cualquier punto de ésta*/
 .go-back {
-    position: fixed;
-    bottom: 2%;
-    left: 96.5%;
-    font-size: 2.5rem;
-    z-index: 9999;
-    opacity: 0.8;
+    display: none;
 }
 
 i {
     margin: 0 0.5rem;
 }
-
 
 /*---------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
@@ -71,42 +66,23 @@ i {
 }
 
 .logo {
-    width: 10%;
+    width: 20%;
 }
 
 .logo img {
     border-radius: 50%;
     border: 0.2rem solid #072E45;
     box-shadow: -4px -1px 2px #0c0c0c6e;
-   
 }
 
 .flex-title {
-    width: 85%;
+    width: 75%;
     text-align: center;
 }
 
 .title-school {
-    font-size: 3rem;
     text-shadow: 2px 2px 5px #0c0c0c6e;
-    animation: show-title 4s forwards;
-}
 
-/*animación para el título*/
-@keyframes show-title {
-    0%{
-        transform: translate(-100px, -100px);
-        opacity: 0;
-    }
-    100%{
-        transform: translate(0px, 0px);
-        opacity: 1;
-    }
-    
-}
-
-.slogan{
-    font-size: 1.5rem;
 }
 
 /*---------------------------------------------------------------------------------------------*/
@@ -119,45 +95,10 @@ i {
     margin: 2rem auto;
 }
 
-.list-web {
-    display: flex;
-    justify-content: space-between;
-}
-
 .item-web {
-    width: 19%;
     list-style: none;
-    opacity: 0;
-}
+    width: 100%;
 
-/*animación para que el menú aparezca progresivamente*/
-
-.item-web:first-of-type{
-    animation: show-menu 0.8s 2.5s ease forwards; 
-}
-.item-web:nth-of-type(2){
-    animation: show-menu 0.8s 2s ease forwards;
-}
-.item-web:nth-of-type(3){
-    animation: show-menu 0.8s 1.5s ease forwards;
-}
-.item-web:nth-of-type(4){
-    animation: show-menu 0.8s 1s ease forwards;
-}
-.item-web:nth-of-type(5){
-    animation: show-menu 0.8s 0.5s ease forwards;
-}
-
-@keyframes show-menu {
-    0%{
-        transform: translateX(-1000px);
-        
-    }
-    100%{
-        transform: translateX(0px);
-        opacity: 1;
-    }
-    
 }
 
 /*propiedades para todos los enlaces del menú principal*/
@@ -170,33 +111,11 @@ i {
     text-decoration: none;
     padding: 0.5rem;
     font-size: 1.5rem;
-    transition: all 0.5s;
+
 }
 
-.sub-item a {
-    font-size: 1.2rem;
-}
-
-.item-web a:hover {
-    color: #CFCDC0;
-    background-color: #072E45;
-}
-
-/*para que sea el eje de coordenadas de cada elemento dentro de esta etiqueta*/
-.pos-rel {
-    position: relative;
-}
-
-/*Los menús desplegables*/
 .show-list {
-    list-style: none;
-    width: 100%;
-    position: absolute;
     display: none;
-}
-
-.pos-rel:hover .show-list {
-    display: block;
 }
 
 /*---------------------------------------------------------------------------------------------*/
@@ -211,18 +130,12 @@ i {
     margin: 1rem auto;
 }
 
-.team {
-    display: flex;
-    justify-content: space-evenly;
-}
-
 .title-subsection {
     font-size: 1.3rem;
     margin-bottom: 2rem;
 }
 
 .member {
-    width: 25%;
     padding: 1rem;
     transition: all 0.8s;
 }
@@ -230,30 +143,17 @@ i {
 .job-member {
     text-align: center;
     font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .photo-member {
     border-radius: 0.8rem;
     transition: all 0.5s;
-    transform: translateY(30%);
+
 }
 
 .menu-member {
     list-style: none;
-    transition: all 0.8s;
-    opacity: 0;
-}
-
-.menu-member li {
-    padding: 0.3rem;
-}
-
-.member:hover .photo-member {
-    transform: translateY(0%);
-}
-
-.member:hover .menu-member {
-    opacity: 1;
 }
 
 /*---------------------------------------------------------------------------------------------*/
@@ -262,7 +162,6 @@ i {
 /*---------------------------------------------------------------------------------------------*/
 
 /*CSS - NUESTRO CENTRO*/
-
 .school-photo {
     width: 60%;
     margin: 0 auto;
@@ -276,46 +175,27 @@ i {
     margin: 1.5rem auto;
 }
 
-.collage {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-
-}
-
 .image-class {
-    width: 30%;
     position: relative;
 }
 
-
 .image-class img {
-    transition: all 0.5s;
     width: 90%;
     margin: 1.5rem;
     border: 0.2rem solid #072E45;
     box-shadow: 3px 3px 5px #0c0c0c6e;
-    opacity: 0.3;
+    opacity: 0.7;
+    transition: all 0.5s;
 }
 
 .image-class h4 {
     position: absolute;
-    top: 35%;
-    font-size: 2.5rem;
+    top: 40%;
     width: 100%;
     text-align: center;
+    font-size: 2rem;
     transition: all 0.5s;
 }
-
-.image-class:hover img {
-    transform: scale(1.2);
-    opacity: 1;
-}
-
-.image-class:hover h4 {
-    opacity: 0;
-}
-
 
 /*---------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
@@ -325,50 +205,18 @@ i {
 /*CSS - NUESTROS CURSOS*/
 
 .contain-courses {
-    display: flex;
     margin: 3rem auto;
 }
 
 .sect-list-courses {
-    width: 20%;
-    margin: 12rem auto;
-}
-
-.item-course {
-    list-style: none;
-    display: block;
-    width: 100%;
-    border: 0.3rem solid #072E45;
-    padding: 1rem;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1.2rem;
-    margin: 0.5rem auto;
-    transition: all 0.5s;
-    cursor: pointer;
-}
-
-.item-course:hover {
-    color: #CFCDC0;
-    background-color: #072E45;
-}
-
-.course-article {
-    width: 70%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    position: relative;
+    display: none;
 }
 
 .course {
-    width: 75%;
     border: 0.5rem solid;
     border-radius: 0.5rem;
     box-shadow: 3px 3px 3px #0c0c0c6e, -3px -3px 3px #0c0c0c6e;
-    position: absolute;
-    left: 10%;
-    transition: all 1s;
+    margin: 2rem auto;
 }
 
 .title-course {
@@ -391,30 +239,28 @@ i {
 /*---------------------------------------------------------------------------------------------*/
 
 /*CSS - CONTACTO*/
+
 .general {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 2rem auto;
+    margin: 1rem auto;
 }
 
 .subgeneral {
-    width: 33%;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .subgeneral:not(:last-child) {
-    border-right: 0.3rem solid;
+    border-bottom: 0.3rem solid;
 }
 
 .title-contact {
     text-align: center;
-    margin: 2rem auto;
+    margin: 1rem auto;
     font-size: 1.5rem;
 }
 
 .map {
     width: 100%;
-    height: 200px;
+    height: 300px;
     border: 0.3rem solid black;
     margin: 0 auto;
 }
@@ -422,17 +268,15 @@ i {
 .list-contact {
     list-style: none;
     font-size: 1.2rem;
+    text-align: center;
 }
 
 .list-contact li {
-    text-indent: 1rem;
     margin: 0.8rem auto;
+    font-size: 1rem;
 }
 
-.contact-form {
-    width: 100%;
-    margin-left: 1rem;
-}
+
 
 .question {
     align-items: center;
@@ -445,15 +289,15 @@ i {
 }
 
 #name-user {
-	width: 85%;
+    width: 85%;
 }
 
 #mail-user {
-	width: 70%;
+    width: 70%;
 }
 
 #select-course {
-	width: 52%;
+    width: 52%;
 }
 
 .btn-form {
@@ -478,35 +322,21 @@ i {
     text-align: center;
 }
 
-.contain-rs {
-    display: flex;
-    align-items: center;
-}
-
-
-
-.rs {
-    width: 50%;
-}
-
 .link-rs {
     text-decoration: none;
 }
 
 .rs h4 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
 }
 
-
 .tweet {
-    width: 80%;
     background-color: #072E45;
     color: #CFCDC0;
     border-radius: 0.5rem;
     margin: 1rem auto;
     padding: 1rem;
-
 }
 
 .user-rs {
@@ -525,12 +355,7 @@ i {
     font-size: 0.9rem;
 }
 
-.date-tweet {
-    text-align: end;
-}
-
 .publication {
-    width: 70%;
     border-radius: 0.8rem;
     margin: 1rem auto;
     background-color: #072E45;
@@ -568,39 +393,322 @@ i {
 .contain-footer {
     background-color: #CFCDC0;
     padding: 1rem;
-}
-
-.contact-rs{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-}
-
-.menu-footer{
-    display: flex;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-.info-footer{  
-    list-style: none;
+    font-size: 1rem;
     text-align: center;
-    margin: 0.2rem auto;   
+}
+
+.info-footer {
+    list-style: none;
+    margin: 0.5rem auto;
 }
 
 .link-footer {
-	text-decoration: none;
-	width: 30%;
-	text-align: center;
-    padding: 1rem;
+    text-decoration: none;
+    margin: 0.5rem auto;
+
+
 }
 
-.link-footer:first-child{
-    border-right: 0.2rem solid;
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+
+@media all and (min-width: 600px) {
+
+
+    /* ---- CSS - QUIENES SOMOS ---- */
+    .team {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .member {
+        width: 50%;
+    }
+
+    /* ---- CSS - NUESTRO CENTRO ---- */
+    .collage {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .image-class {
+        width: 48%;
+    }
+
+    .image-class h4 {
+        left: 4%;
+    }
+
+    /* ---- CSS - CONTACTO ---- */
+    .map {
+        display: block;
+        width: 70%;
+        margin: 0 auto;
+    }
+
 }
 
 
 
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
 
 
+@media all and (min-width: 820px) {
+
+    /* ---- CSS - HEADER ----- */
+    .title-school {
+        font-size: 2.5rem;
+    }
+
+    .list-web {
+        display: flex;
+    }
+
+    /*CSS - NUESTROS CURSOS*/
+    .course-article {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .course {
+        width: 48%;
+    }
+
+}
+
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+
+
+@media all and (min-width: 1000px) {
+
+    /*PROPIEDADES GENERALES*/
+    /*Botón para subir a la parte superior de la página desde cualquier punto de ésta*/
+    .go-back {
+        display: block;
+        position: fixed;
+        bottom: 1%;
+        left: 95%;
+        font-size: 2.5rem;
+        z-index: 9999;
+        opacity: 0.8;
+    }
+
+
+    /*CSS - MENÚ NAVEGACIÓN*/
+    /*propiedades para todos los enlaces del menú principal*/
+    .item-web a {
+        transition: all 0.5s;
+    }
+
+    .sub-item a {
+        font-size: 1.2rem;
+    }
+
+    .item-web a:hover {
+        color: #CFCDC0;
+        background-color: #072E45;
+    }
+
+    /*para que sea el eje de coordenadas de cada elemento dentro de esta etiqueta*/
+    .pos-rel {
+        position: relative;
+    }
+
+    /*Los menús desplegables*/
+    .show-list {
+        display: block;
+        list-style: none;
+        width: 100%;
+        position: absolute;
+        display: none;
+    }
+
+    .pos-rel:hover .show-list {
+        display: block;
+    }
+
+
+    /*CSS - QUIENES SOMOS*/
+    .member {
+        width: 25%;
+        transition: all 0.8s;
+    }
+
+    .photo-member {
+        transform: translateY(30%);
+    }
+
+    .menu-member {
+        transition: all 0.5s;
+        opacity: 0;
+    }
+
+    .member:hover .photo-member {
+        transform: translateY(0%);
+    }
+
+    .member:hover .menu-member {
+        opacity: 1;
+    }
+
+    /*CSS - NUESTRO CENTRO*/
+    .image-class {
+        width: 33%;
+    }
+
+    .image-class:hover img {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    .image-class:hover h4 {
+        opacity: 0.2;
+    }
+
+    /*CSS - NUESTROS CURSOS*/
+    .contain-courses {
+        display: flex;
+        margin: 3rem auto;
+    }
+
+    .sect-list-courses {
+        display: block;
+        width: 20%;
+        margin: 12rem auto;
+    }
+
+    .item-course {
+        list-style: none;
+        display: block;
+        width: 100%;
+        border: 0.3rem solid #072E45;
+        padding: 1rem;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1.2rem;
+        margin: 0.5rem auto;
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+    .item-course:hover {
+        color: #CFCDC0;
+        background-color: #072E45;
+    }
+
+    .course-article {
+        width: 70%;
+        position: relative;
+    }
+
+    .course {
+        width: 75%;
+        border: 0.5rem solid;
+        border-radius: 0.5rem;
+        box-shadow: 3px 3px 3px #0c0c0c6e, -3px -3px 3px #0c0c0c6e;
+        position: absolute;
+        left: 10%;
+        transition: all 1s;
+    }
+
+    /*CSS - CONTACTO*/
+    .general {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 2rem auto;
+    }
+
+    .subgeneral {
+        width: 33%;
+        padding: 1rem;
+    }
+
+    .subgeneral:not(:last-child) {
+        border-right: 0.3rem solid;
+        border-bottom: 0;
+    }
+
+    .map {
+        width: 100%;
+    }
+
+    .list-contact {
+        text-align: start;
+        margin-top: 5rem;
+    }
+
+    .contact-form {
+        width: 100%;
+        margin-left: 1rem;
+    }
+
+    /* ---- CSS - REDES SOCIALES ----- */
+    .contain-rs {
+        display: flex;
+        align-items: center;
+    }
+
+    .rs {
+        width: 50%;
+    }
+
+    .tweet {
+        width: 80%;
+    }
+
+    .publication {
+        width: 70%;
+    }
+
+    /* ---- CSS - FOOTER ----- */
+
+    .menu-footer {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-footer {
+        margin: 0.2rem auto;
+    }
+
+
+    .contact-rs {
+        display: flex;
+        justify-content: start;
+        font-size: 1.2rem;
+    }
+
+    a.link-footer {
+        display: block;
+        width: 50%;
+        text-align: end;
+        padding-right: 0.5rem;
+        border-right: 0.2rem solid #072E45;
+    }
+
+    p.link-footer {
+
+        width: 50%;
+        text-align: start;
+        padding-left: 0.5rem;
+
+    }
+
+
+
+
+
+
+
+}

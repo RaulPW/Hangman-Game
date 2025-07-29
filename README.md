@@ -44,7 +44,7 @@ Para ver y jugar a "El Ahorcado" en tu entorno local, sigue estos sencillos paso
 
 1.	Clona el repositorio:
 
-        git clone https://github.com/tu-usuario/ElAhorcado.git # Asegúrate de reemplazar 'tu-usuario' por tu nombre de usuario real en GitHub
+        git clone https://github.com/rdelgadodev/ElAhorcado.git
         cd ElAhorcado
   	
 3.	Abre el archivo index.html: Simplemente navega hasta la carpeta ElAhorcado en tu sistema de archivos y haz doble clic en el archivo index.html. Se abrirá automáticamente en tu navegador web predeterminado.

@@ -21,6 +21,7 @@
 •	Diseño Visual: Utiliza un tema visual "Western" con fuentes y fondos que evocan esa estética. 
 
 🛠️ Tecnologías Utilizadas
+
 Este proyecto front-end ha sido desarrollado utilizando las siguientes tecnologías estándar de la web:
 
 •	HTML5: Para estructurar la interfaz del juego, incluyendo los campos de entrada, botones, el área para mostrar la palabra oculta y los mensajes. 

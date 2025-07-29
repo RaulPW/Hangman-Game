@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Google Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Dosis:wght@200..800&family=Kelly+Slab&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Londrina+Sketch&family=Macondo&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rock+Salt&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Ahorcado</title>
+
+</head>
+
+<body>
+    <div id="contain">
+        <header class="cont-header">
+            <h1 class="title">El juego del Ahorcado</h1>
+        </header>
+
+        <main>
+            <div class="contain-user">
+                <label for="answer_user" class="ask_user">Palabra a adivinar:</label>
+                <input type="password" id="answer_user">
+                <button id="btn_playgame">A jugar!</button>
+                <button id="btn_initial">Volver a empezar</button>
+            </div>
+
+
+            <!--Contiene todo el panel del juego-->
+            <div id="contain_game">
+                <h2 id="clue">La palabra a adivinar contiene: <span id="n-letter"></span> letras</h2>
+
+
+                <!--Aqui se indicarán las letras usadas y las vidas gastadas-->
+                <div class="panels life-letters">
+                    <div class="div-panels">
+                        <h3>Letras intentadas:</h3>
+                        <div class="letters" id="print_letters"></div>
+                    </div>
+                    <div class="div-panels">
+                        <h3>Vidas:</h3>
+                        <div class="lifes">
+                            <div class="life" id="part1"></div>
+                            <div class="life" id="part2"></div>
+                            <div class="life" id="part3"></div>
+                            <div class="life" id="part4"></div>
+                            <div class="life" id="part5"></div>
+                            <div class="life" id="part6"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--Aqui se mostrará los huecos y se pedirá al usuario una letra-->
+                <div class="panels">
+                    <div id="contain_letters">
+                    </div>
+                    <div class="contain_player">
+                        <label for="answer_player" class="in_letter">Introduzca una letra: </label>
+                        <input type="text" id="answer_player" maxlength="1">
+                        <button id="btn_check_letter">Comprobar</button>
+                        <button id="btn_solve_panel">¿Quieres resolver?</button>
+                        <div id="solution">
+                            <label for="player_solution" class="question_word">¿Cual es la palabra?</label>
+                            <input type="text" name="player_solution" id="player_solution">
+                            <button id="btn_solve">Comprobar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+            <!--Cuadro emergente con los mensajes para el usuario-->
+            <div id="msg">
+                <p id="msg_text"></p>
+                <button id="btn_close_msg">Entendido</button>
+                <button id="btn_reset">Volver a jugar</button>
+            </div>
+
+
+
+
+
+
+        </main>
+    </div>
+
+    <script src="events.js">
+
+    </script>
+</body>
+
+</html>

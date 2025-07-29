@@ -33,7 +33,7 @@ Este proyecto front-end ha sido desarrollado utilizando las siguientes tecnolog�
 - Comprobación de letras y palabras.
 - Actualización dinámica de la interfaz (mostrar letras correctas, ocultar vidas). 
 - Control de eventos de clic en los botones del juego.
-- 
+  
 •	Google Fonts: Para integrar tipografías específicas utilizadas en el diseño.
 
 •	Fuentes Personalizadas: Se utilizan fuentes @font-face como 'titulo-west' (Barbarosa.ttf), 'texto' (West-Hood-DEMO.ttf) y 'text-main' (WesternSheriff-j9jqM.otf) para el tema visual. 
